@@ -3,18 +3,17 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/google/uuid"
 	"math/rand"
 	"strconv"
 	"strings"
 	"time"
-
-	"github.com/google/uuid"
 )
 
 // tx_date, shop_id, pos_id, tx_id, item_id, ammount, cardnum
 func main() {
 	// 引数のParse
-	var flagShopID = flag.Int("shopid", 0, "Shop ID(0-3000)")
+	var flagShopID = flag.Int("shopid", 0, "Shop ID(0-10)")
 	var flagPosID = flag.Int("posid", 0, "POS ID(0-5)")
 	flag.Parse()
 
@@ -46,7 +45,7 @@ func main() {
 		// 一回のトランザクション
 		for i := 0; i < linenumArray[rand.Intn(len(linenumArray))]; i++ {
 			if multiShopWait > 0 {
-				shopID = strconv.Itoa(1 + rand.Intn(3000))
+				shopID = strconv.Itoa(1 + rand.Intn(10))
 			}
 			txDate := time.Now().Format("2006/01/02 15:04:05")
 			txuuid, _ := uuid.NewUUID()
