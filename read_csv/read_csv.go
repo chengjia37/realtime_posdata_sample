@@ -8,6 +8,9 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/kinesis"
 	"github.com/hpcloud/tail"
+	"math/rand"
+	"strconv"
+	//"strings"
 )
 
 const deaultRegion = "ap-northeast-1"
@@ -35,10 +38,12 @@ func main() {
 	for line := range t.Lines {
 		// _ = line
 		// enc := base64.StdEncoding.EncodeToString([]byte("Hello"))
+		key := rand.Intn(50)
+		fmt.Println(key)
 		record := &kinesis.PutRecordInput{
 			Data:         []byte(line.Text),
-			PartitionKey: aws.String("1"),
-			StreamName:   aws.String("pos2"),
+			PartitionKey: aws.String(strconv.Itoa(key)),
+			StreamName:   aws.String("realtime_pos"),
 		}
 		kinesisReesp, err := service.PutRecord(record)
 		if err != nil {
