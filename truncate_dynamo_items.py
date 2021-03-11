@@ -2,12 +2,15 @@
 import sys
 import os
 import boto3
+from boto3.session import Session
 
 REGION_NAME = "ap-northeast-1"
-TABLE_NAME  = "REALTIME-POS-DATA"
+TABLE_NAME  = "REALTIME-POS-DATA-TEI"
+profile = 'kinesis'
 
 def main():
-    dynamodb = boto3.resource('dynamodb', region_name=REGION_NAME)
+    session = Session(profile_name=profile)
+    dynamodb = session.resource('dynamodb', region_name=REGION_NAME)
     table    = dynamodb.Table(TABLE_NAME)
     truncate_dynamo_items(table)
 
